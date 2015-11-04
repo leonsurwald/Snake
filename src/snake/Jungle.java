@@ -6,7 +6,10 @@
 package snake;
 
 import environment.Environment;
+import grid.Grid;
+import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Point;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 
@@ -16,8 +19,11 @@ import java.awt.event.MouseEvent;
  */
 class Jungle extends Environment {
 
+    
+    Grid grid;
+    
     public Jungle() {
-   
+        grid = new Grid(25, 25, 20, 20, new Point(50, 50), Color.BLUE);
     }
 
     @Override
@@ -42,12 +48,15 @@ class Jungle extends Environment {
 
     @Override
     public void environmentMouseClicked(MouseEvent e) {
-
+        System.out.println("Mouse clicked at " + e.getPoint());
+        System.out.println("Mouse clicked in cell " + grid.getCellLocationFromSystemCoordinate(e.getPoint()));
     }
 
     @Override
     public void paintEnvironment(Graphics graphics) {
-
+        if (grid != null) {
+            grid.paintComponent(graphics);
+        }
     }
     
 }
