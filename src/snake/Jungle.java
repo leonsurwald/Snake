@@ -22,7 +22,7 @@ class Jungle extends Environment {
     Grid grid;
 
     public Jungle() {
-        grid = new Grid(25, 25, 20, 20, new Point(50, 50), Color.BLUE);
+        grid = new Grid(25, 25, 20, 20, new Point(50, 50), Color.BLACK);
     }
 
     @Override
