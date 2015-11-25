@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package snake;
+package stacker;
 
 import environment.Environment;
 import grid.Grid;
@@ -22,7 +22,8 @@ class Jungle extends Environment {
     Grid grid;
 
     public Jungle() {
-        grid = new Grid(25, 25, 20, 20, new Point(50, 50), Color.BLACK);
+        this.setBackground(Color.BLACK);
+        grid = new Grid(7, 16, 30, 30, new Point(350, 50), Color.CYAN);
     }
 
     @Override
@@ -73,6 +74,7 @@ class Jungle extends Environment {
 
     @Override
     public void paintEnvironment(Graphics graphics) {
+         
         if (grid != null) {
             grid.paintComponent(graphics);
         }
