@@ -20,15 +20,17 @@ import java.awt.event.MouseEvent;
 class Jungle extends Environment {
 
     Grid grid;
-
+    Block block;
+    
     public Jungle() {
         this.setBackground(Color.BLACK);
-        grid = new Grid(7, 16, 30, 30, new Point(350, 50), Color.CYAN);
+        grid = new Grid(7, 16, 30, 30, new Point(350, 50), Color.DARK_GRAY);
+        block = new Block(grid.getRandomGridLocation().x,grid.getRandomGridLocation().y,grid.getCellHeight(), grid.getCellWidth());
     }
 
     @Override
     public void initializeEnvironment() {
-
+        
     }
 
     int counter;
@@ -74,10 +76,15 @@ class Jungle extends Environment {
 
     @Override
     public void paintEnvironment(Graphics graphics) {
-         
+
         if (grid != null) {
             grid.paintComponent(graphics);
         }
+       
+        if (block != null) {
+            block.draw(graphics);
+            
+        }
     }
-
+    
 }
