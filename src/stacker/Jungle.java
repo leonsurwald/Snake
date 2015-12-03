@@ -12,20 +12,29 @@ import java.awt.Graphics;
 import java.awt.Point;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
+import java.util.ArrayList;
 
 /**
  *
  * @author leonsurwald
  */
-class Jungle extends Environment {
+class Jungle extends Environment implements CellDataProviderIntf {
 
     Grid grid;
-    Block block;
+    private ArrayList<Block> blocks;
     
     public Jungle() {
         this.setBackground(Color.BLACK);
         grid = new Grid(7, 16, 30, 30, new Point(350, 50), Color.DARK_GRAY);
-        block = new Block(grid.getRandomGridLocation().x,grid.getRandomGridLocation().y,grid.getCellHeight(), grid.getCellWidth());
+        
+    }
+    
+    public void addBlock(){
+        if (blocks == null) {
+            blocks = new ArrayList<>();
+        }
+
+        blocks.add(new Block(grid.getRandomGridLocation(), this));
     }
 
     @Override
@@ -86,5 +95,27 @@ class Jungle extends Environment {
             
         }
     }
+
+//<editor-fold defaultstate="collapsed" desc="CellDataProviderIntf">
+    @Override
+    public int getCellHeight() {
+        return grid.getCellHeight();
+    }
+    
+    @Override
+    public int getCellWidth() {
+        return grid.getCellWidth();
+    }
+    
+    @Override
+    public int getCellTopLeftX(int x, int y) {
+        return grid.getCellSystemCoordinate(x, y).x;
+    }
+    
+    @Override
+    public int getCellTopLeftY(int x, int y) {
+        return grid.getCellSystemCoordinate(x, y).y;
+    }
+//</editor-fold>
     
 }
