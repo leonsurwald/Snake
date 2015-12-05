@@ -63,32 +63,40 @@ public class StackData {
         //if yes reverse the direction
         if (direction == Direction.RIGHT) {
             //if there is a block in the rightmost column, then we need to reverse direction
-            if (gameGrid[ currentRow ][ gameGrid[currentRow].length ] != null) {
+            if (gameGrid[currentRow][gameGrid[currentRow].length - 1] != null) {
                 direction = Direction.LEFT;
             }
         } else { // direct MUST be left
             //if there is a block in the lefttmost column, then we need to reverse direction
-            if (gameGrid[ currentRow ][ 0 ] != null) {
+            if (gameGrid[currentRow][0] != null) {
                 direction = Direction.RIGHT;
             }
         }
-        
-        
 
         //if moving to the right increase the column number for all the blocks by 1
-        
         if (direction == Direction.RIGHT) {
-            for (int column = gameGrid[currentRow].length - 2; column < 0; column--) {
+            for (int column = gameGrid[currentRow].length - 2; column >= 0; column--) {
 //                if there is a block, then move it to the RIGHT
                 if (gameGrid[currentRow][column] != null) {
-                   gameGrid[currentRow][column + 1] = gameGrid[currentRow][column];
-                   gameGrid[currentRow][column] = null;
-                   gameGrid[currentRow][column + 1].setX(column + 1);
+                    gameGrid[currentRow][column + 1] = gameGrid[currentRow][column];
+                    gameGrid[currentRow][column] = null;
+                    gameGrid[currentRow][column + 1].setX(column + 1);
+                }
+            }
+        }
+
+        //if moving to the left decrease the column number for all the blocks by 1
+        if (direction == Direction.LEFT) {
+            for (int column = 1; column < gameGrid[currentRow].length; column++) {
+//                
+                if (gameGrid[currentRow][column] != null) {
+                    gameGrid[currentRow][column - 1] = gameGrid[currentRow][column];
+                    gameGrid[currentRow][column] = null;
+                    gameGrid[currentRow][column - 1].setX(column - 1);
                 }
             }
         }
         
-        //if moving to the left decrease the column number for all the blocks by 1
-
     }
+    
 }
