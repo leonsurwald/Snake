@@ -24,7 +24,6 @@ public class Block {
 
     }
 
-    
 //<editor-fold defaultstate="collapsed" desc="Constructors">
     Block(int x, int y, CellDataProviderIntf cellData) {
         this.x = x;
