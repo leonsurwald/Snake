@@ -15,7 +15,6 @@ import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 
 // bottom 3 rows 3 blocks; middle 6 rows 2 blocks; 6 top rows 1 block
-
 /**
  *
  * @author leonsurwald
@@ -29,7 +28,7 @@ class GameSurface extends Environment implements CellDataProviderIntf {
     public GameSurface() {
         this.setBackground(Color.BLACK);
         grid = new Grid(7, 15, 30, 30, new Point(350, 50), Color.DARK_GRAY);
-        
+
         stackData = new StackData(grid.getRows(), grid.getColumns(), this);
         stackData.addBlocksToRow(14, 3);
     }
@@ -48,10 +47,20 @@ class GameSurface extends Environment implements CellDataProviderIntf {
     }
 
     int counter;
+    double moveDelay = 0;
+    double moveDelayLimit = 3;
 
     @Override
     public void timerTaskHandler() {                            //Moving Objects, checks for intersection
-//        System.out.println("Hey dude! " + ++counter);
+        if (stackData != null) {
+            if (moveDelay >= moveDelayLimit) {
+                stackData.move();
+                moveDelay = 0;
+            }else{
+                moveDelay++;
+            }
+        }
+        
     }
 
     @Override
@@ -83,9 +92,7 @@ class GameSurface extends Environment implements CellDataProviderIntf {
 //        } else if (e.getKeyCode() == KeyEvent.VK_S) {
 //            System.out.println("GO DOWN");
 //        }
-        if (e.getKeyCode() == KeyEvent.VK_SPACE) {
-            System.out.println("next row");
-        }
+
     }
 
     @Override
@@ -100,7 +107,7 @@ class GameSurface extends Environment implements CellDataProviderIntf {
         if (grid != null) {
             grid.paintComponent(graphics);
         }
-        
+
         if (stackData != null) {
             stackData.draw(graphics);
         }

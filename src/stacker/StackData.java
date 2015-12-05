@@ -6,7 +6,6 @@
 package stacker;
 
 import java.awt.Graphics;
-import stacker.Block;
 
 /**
  *
@@ -14,6 +13,10 @@ import stacker.Block;
  */
 public class StackData {
 
+    // make it move automagically
+    // make different speeds )(later)
+    // set row logic (stop, elimnate, new row)
+    // differetn block counts for (later) 
     public void draw(Graphics graphics) {
         for (int row = 0; row < gameGrid.length; row++) {
             for (int column = 0; column < gameGrid[row].length; column++) {
@@ -97,6 +100,13 @@ public class StackData {
             }
         }
         
+        
+        
+        // make it move automagically
+        // make different speeds )(later)
+        // set row logic (stop, elimnate, new row)
+        // differetn block counts for (later) 
+
     }
-    
+
 }
