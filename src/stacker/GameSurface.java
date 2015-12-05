@@ -67,6 +67,9 @@ class GameSurface extends Environment implements CellDataProviderIntf {
 //        } else if (e.getKeyCode() == KeyEvent.VK_DOWN) {
 //            System.out.println("GO DOWN");
 //        }
+        if (e.getKeyCode() == KeyEvent.VK_SPACE) {
+            stackData.move();
+        }
     }
 
     @Override
