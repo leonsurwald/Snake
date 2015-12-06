@@ -20,9 +20,7 @@ public class Block {
         graphics.fill3DRect(cellData.getCellTopLeftX(x, y), cellData.getCellTopLeftY(x, y), cellData.getCellWidth(), cellData.getCellHeight(), true);
     }
 
-    public void move() {
-        
-    }
+
 
 //<editor-fold defaultstate="collapsed" desc="Constructors">
     Block(int x, int y, CellDataProviderIntf cellData) {
@@ -44,7 +42,7 @@ public class Block {
     private int y;
     private int x;
     private CellDataProviderIntf cellData;
-    private Color color = Color.BLUE;
+    private Color color = Color.CYAN;
     
     /**
      * @return the y

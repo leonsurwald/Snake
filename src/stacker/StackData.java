@@ -5,6 +5,7 @@
  */
 package stacker;
 
+import grid.Grid;
 import java.awt.Graphics;
 
 /**
@@ -13,10 +14,8 @@ import java.awt.Graphics;
  */
 public class StackData {
 
-    // make it move automagically
-    // make different speeds )(later)
-    // set row logic (stop, elimnate, new row)
-    // differetn block counts for (later) 
+    Grid grid;
+
     public void draw(Graphics graphics) {
         for (int row = 0; row < gameGrid.length; row++) {
             for (int column = 0; column < gameGrid[row].length; column++) {
@@ -35,13 +34,36 @@ public class StackData {
 
     private final CellDataProviderIntf cellData;
     private Speed speed = Speed.SLOW;
-    private int currentRow = 14;
+    private int currentRow = 14;                      //how to ask the grid for the row number? game grid? why isn't it grid.getRows()
     private Direction direction = Direction.RIGHT;
 
     private Block[][] gameGrid;
 
+    public void stopMovement() {
+
+        if (currentRow >= 0) {
+            currentRow--;
+        }
+        if (currentRow <= 14) {
+            addBlocksToRow(currentRow, 3);
+        }
+        if (currentRow <= 11) {
+            addBlocksToRow(currentRow, 2);
+        }
+        if (currentRow <= 5) {
+            addBlocksToRow(currentRow, 1);
+        }
+
+    }
+
+    public void eliminateBlocks() {
+        //check if blocks in row below have same x values
+        //if not delete blocks with new x values in current row
+        //remaining number of blocks is the new value of numberToAdd
+    }
+
     public void addBlocksToRow(int row, int numberToAdd) {
-        //clean out any existing blocks in that row
+        //clean out any existing blocks in that currentRow
         // start at position 0, add numberToAdd blocks, moving to the right each time
         // make sure you don't go outside of structure
 
@@ -62,7 +84,8 @@ public class StackData {
     }
 
     public void move() {
-        // check if you're at the end of the row 
+
+        // check if you're at the end of the currentRow
         //if yes reverse the direction
         if (direction == Direction.RIGHT) {
             //if there is a block in the rightmost column, then we need to reverse direction
@@ -73,6 +96,7 @@ public class StackData {
             //if there is a block in the lefttmost column, then we need to reverse direction
             if (gameGrid[currentRow][0] != null) {
                 direction = Direction.RIGHT;
+
             }
         }
 
@@ -91,7 +115,7 @@ public class StackData {
         //if moving to the left decrease the column number for all the blocks by 1
         if (direction == Direction.LEFT) {
             for (int column = 1; column < gameGrid[currentRow].length; column++) {
-//                
+//
                 if (gameGrid[currentRow][column] != null) {
                     gameGrid[currentRow][column - 1] = gameGrid[currentRow][column];
                     gameGrid[currentRow][column] = null;
@@ -99,14 +123,11 @@ public class StackData {
                 }
             }
         }
-        
-        
-        
+
         // make it move automagically
         // make different speeds )(later)
-        // set row logic (stop, elimnate, new row)
-        // differetn block counts for (later) 
-
+        // set currentRow logic (stop, elimnate, new currentRow)
+        // differetn block counts for (later)
     }
 
 }

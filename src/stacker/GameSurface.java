@@ -12,7 +12,7 @@ import java.awt.Graphics;
 import java.awt.Point;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
-import java.util.ArrayList;
+//import java.util.ArrayList;
 
 // bottom 3 rows 3 blocks; middle 6 rows 2 blocks; 6 top rows 1 block
 /**
@@ -22,7 +22,7 @@ import java.util.ArrayList;
 class GameSurface extends Environment implements CellDataProviderIntf {
 
     Grid grid;
-    private ArrayList<Block> blocks;
+//    private ArrayList<Block> blocks;
     private StackData stackData;
 
     public GameSurface() {
@@ -33,14 +33,14 @@ class GameSurface extends Environment implements CellDataProviderIntf {
         stackData.addBlocksToRow(14, 3);
     }
 
-    public void addBlock() {
-        if (blocks == null) {
-            blocks = new ArrayList<>();
-        }
-
-        blocks.add(new Block(grid.getRandomGridLocation(), this));
-    }
-
+//
+//    public void addBlock() {
+//        if (blocks == null) {
+//            blocks = new ArrayList<>();
+//        }
+//
+//        blocks.add(new Block(grid.getRandomGridLocation(), this));
+//    }
     @Override
     public void initializeEnvironment() {
 
@@ -48,7 +48,7 @@ class GameSurface extends Environment implements CellDataProviderIntf {
 
     int counter;
     double moveDelay = 0;
-    double moveDelayLimit = 3;
+    double moveDelayLimit = 5;
 
     @Override
     public void timerTaskHandler() {                            //Moving Objects, checks for intersection
@@ -56,11 +56,11 @@ class GameSurface extends Environment implements CellDataProviderIntf {
             if (moveDelay >= moveDelayLimit) {
                 stackData.move();
                 moveDelay = 0;
-            }else{
+            } else {
                 moveDelay++;
             }
         }
-        
+
     }
 
     @Override
@@ -77,7 +77,7 @@ class GameSurface extends Environment implements CellDataProviderIntf {
 //            System.out.println("GO DOWN");
 //        }
         if (e.getKeyCode() == KeyEvent.VK_SPACE) {
-            stackData.move();
+            stackData.stopMovement();
         }
     }
 
