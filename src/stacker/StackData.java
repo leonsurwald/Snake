@@ -12,9 +12,14 @@ import java.awt.Graphics;
  *
  * @author leonsurwald
  */
-public class StackData {
+public final class StackData {
 
     Grid grid;
+
+    public StackData(int rows, int columns, CellDataProviderIntf cellData) {
+        gameGrid = new Block[rows][columns];
+        this.cellData = cellData;
+    }
 
     public void draw(Graphics graphics) {
         for (int row = 0; row < gameGrid.length; row++) {
@@ -26,12 +31,6 @@ public class StackData {
         }
     }
 
-    public StackData(int rows, int columns, CellDataProviderIntf cellData) {
-        gameGrid = new Block[rows][columns];
-
-        this.cellData = cellData;
-    }
-
     private final CellDataProviderIntf cellData;
     private Speed speed = Speed.SLOW;
     private int currentRow = 14;                      //how to ask the grid for the row number? game grid? why isn't it grid.getRows()
@@ -40,23 +39,37 @@ public class StackData {
     private Block[][] gameGrid;
 
     public void stopMovement() {
-
-        if (currentRow >= 0) {
+        
+        if (currentRow <= 0) {
+            direction = direction.STOP;
+        }
+        if (currentRow > 0) {
             currentRow--;
-        }
-        if (currentRow <= 14) {
-            addBlocksToRow(currentRow, 3);
-        }
-        if (currentRow <= 11) {
-            addBlocksToRow(currentRow, 2);
-        }
-        if (currentRow <= 5) {
-            addBlocksToRow(currentRow, 1);
-        }
 
+            if (currentRow <= 14) {
+                addBlocksToRow(currentRow, 3);
+            }
+            if (currentRow <= 11) {
+                addBlocksToRow(currentRow, 2);
+            }
+            if (currentRow <= 5) {
+                addBlocksToRow(currentRow, 1);
+            }
+        }
     }
 
     public void eliminateBlocks() {
+      
+//        for (int i = 1; i < 7; i++) {
+          
+//        if (gameGrid[currentRow][0] != null){
+//               if (gameGrid[currentRow -1][0] == null) {
+//                   gameGrid[currentRow][0] = null;
+//                    
+//               }
+//           }
+            
+           
         //check if blocks in row below have same x values
         //if not delete blocks with new x values in current row
         //remaining number of blocks is the new value of numberToAdd
@@ -110,6 +123,11 @@ public class StackData {
                     gameGrid[currentRow][column + 1].setX(column + 1);
                 }
             }
+        }
+        
+        if (direction == Direction.STOP) {
+            int column = 0;
+            gameGrid[currentRow][column] = gameGrid[currentRow][column];
         }
 
         //if moving to the left decrease the column number for all the blocks by 1

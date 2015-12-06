@@ -78,6 +78,7 @@ class GameSurface extends Environment implements CellDataProviderIntf {
 //        }
         if (e.getKeyCode() == KeyEvent.VK_SPACE) {
             stackData.stopMovement();
+
         }
     }
 
@@ -92,7 +93,9 @@ class GameSurface extends Environment implements CellDataProviderIntf {
 //        } else if (e.getKeyCode() == KeyEvent.VK_S) {
 //            System.out.println("GO DOWN");
 //        }
-
+// if (e.getKeyCode() == KeyEvent.VK_SPACE) {
+//            stackData.eliminateBlocks();   //change to ask grid
+//        }
     }
 
     @Override

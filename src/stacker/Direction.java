@@ -11,5 +11,5 @@ package stacker;
  */
 public enum Direction {
     
-    LEFT, RIGHT
+    LEFT, RIGHT, STOP
 }
