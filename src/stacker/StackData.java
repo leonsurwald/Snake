@@ -39,10 +39,13 @@ public final class StackData {
     private Block[][] gameGrid;
 
     public void stopMovement() {
-        
+
         if (currentRow <= 0) {
             direction = direction.STOP;
         }
+
+        eliminateBlocks();
+
         if (currentRow > 0) {
             currentRow--;
 
@@ -58,21 +61,27 @@ public final class StackData {
         }
     }
 
+    public void speed() {
+
+    }
+
     public void eliminateBlocks() {
-      
-//        for (int i = 1; i < 7; i++) {
-          
-//        if (gameGrid[currentRow][0] != null){
-//               if (gameGrid[currentRow -1][0] == null) {
-//                   gameGrid[currentRow][0] = null;
-//                    
-//               }
-//           }
-            
-           
-        //check if blocks in row below have same x values
-        //if not delete blocks with new x values in current row
-        //remaining number of blocks is the new value of numberToAdd
+        if (currentRow < gameGrid.length - 1) {
+            for (int column = 0; column < gameGrid[currentRow].length; column++) {
+
+                if ((gameGrid[currentRow][column] == null) && (gameGrid[currentRow + 1][column] == null)) {
+
+                }
+
+                if ((gameGrid[currentRow][column] != null) && (gameGrid[currentRow + 1][column] == null)) {
+                    gameGrid[currentRow][column] = null;
+                }
+
+            }
+        }
+//        //check if blocks in row below have same x values
+//        //if not delete blocks with new x values in current row
+//        //remaining number of blocks is the new value of numberToAdd
     }
 
     public void addBlocksToRow(int row, int numberToAdd) {
@@ -124,10 +133,9 @@ public final class StackData {
                 }
             }
         }
-        
+
         if (direction == Direction.STOP) {
-            int column = 0;
-            gameGrid[currentRow][column] = gameGrid[currentRow][column];
+
         }
 
         //if moving to the left decrease the column number for all the blocks by 1

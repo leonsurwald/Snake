@@ -31,6 +31,7 @@ class GameSurface extends Environment implements CellDataProviderIntf {
 
         stackData = new StackData(grid.getRows(), grid.getColumns(), this);
         stackData.addBlocksToRow(14, 3);
+
     }
 
 //
@@ -65,20 +66,9 @@ class GameSurface extends Environment implements CellDataProviderIntf {
 
     @Override
     public void keyPressedHandler(KeyEvent e) {
-//        System.out.println("Key Event " + e.getKeyChar());
-//        System.out.println("Key Event " + e.getKeyCode());
-//        if (e.getKeyCode() == KeyEvent.VK_LEFT) {
-//            System.out.println("GO LEFT");
-//        } else if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
-//            System.out.println("GO RIGHT");
-//        } else if (e.getKeyCode() == KeyEvent.VK_UP) {
-//            System.out.println("GO UP");
-//        } else if (e.getKeyCode() == KeyEvent.VK_DOWN) {
-//            System.out.println("GO DOWN");
-//        }
         if (e.getKeyCode() == KeyEvent.VK_SPACE) {
             stackData.stopMovement();
-
+          
         }
     }
 
@@ -93,7 +83,7 @@ class GameSurface extends Environment implements CellDataProviderIntf {
 //        } else if (e.getKeyCode() == KeyEvent.VK_S) {
 //            System.out.println("GO DOWN");
 //        }
-// if (e.getKeyCode() == KeyEvent.VK_SPACE) {
+//        if (e.getKeyCode() == KeyEvent.VK_SPACE) {
 //            stackData.eliminateBlocks();   //change to ask grid
 //        }
     }
@@ -129,12 +119,14 @@ class GameSurface extends Environment implements CellDataProviderIntf {
     }
 
     @Override
-    public int getCellTopLeftX(int x, int y) {
+    public int getCellTopLeftX(int x, int y
+    ) {
         return grid.getCellSystemCoordinate(x, y).x;
     }
 
     @Override
-    public int getCellTopLeftY(int x, int y) {
+    public int getCellTopLeftY(int x, int y
+    ) {
         return grid.getCellSystemCoordinate(x, y).y;
     }
 //</editor-fold>
