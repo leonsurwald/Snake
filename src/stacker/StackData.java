@@ -14,67 +14,72 @@ import java.awt.Graphics;
  */
 public final class StackData {
 
-    Grid grid;
-
     public StackData(int rows, int columns, CellDataProviderIntf cellData) {
         gameGrid = new Block[rows][columns];
         this.cellData = cellData;
     }
 
     public void draw(Graphics graphics) {
-        for (int row = 0; row < gameGrid.length; row++) {
-            for (int column = 0; column < gameGrid[row].length; column++) {
-                if (gameGrid[row][column] != null) {
-                    gameGrid[row][column].draw(graphics);
+        for (int row = 0; row < getGameGrid().length; row++) {
+            for (int column = 0; column < getGameGrid()[row].length; column++) {
+                if (getGameGrid()[row][column] != null) {
+                    getGameGrid()[row][column].draw(graphics);
                 }
             }
         }
     }
 
-    private final CellDataProviderIntf cellData;
-    private Speed speed = Speed.SLOW;
-    private int currentRow = 14;                      //how to ask the grid for the row number? game grid? why isn't it grid.getRows()
-    private Direction direction = Direction.RIGHT;
-
-    private Block[][] gameGrid;
-
     public void stopMovement() {
 
-        if (currentRow <= 0) {
-            direction = direction.STOP;
+        if (getCurrentRow() <= 0) {
+            setDirection(getDirection().STOP);
         }
 
         eliminateBlocks();
 
-        if (currentRow > 0) {
-            currentRow--;
+        if (getCurrentRow() > 0) {
+            setCurrentRow(getCurrentRow() - 1);
 
-            if (currentRow <= 14) {
-                addBlocksToRow(currentRow, 3);
+            int blocksToAdd = 3;
+            
+            if (getCurrentRow() <= 11) {
+                blocksToAdd =  2;
+            } else if (getCurrentRow() <= 5) {
+                blocksToAdd =  1;
             }
-            if (currentRow <= 11) {
-                addBlocksToRow(currentRow, 2);
+
+            if (currentRow < gameGrid.length - 1){
+                blocksToAdd = Math.min(countBlocks(currentRow + 1), blocksToAdd);            
             }
-            if (currentRow <= 5) {
-                addBlocksToRow(currentRow, 1);
-            }
+            addBlocksToRow(getCurrentRow(), blocksToAdd);
         }
     }
 
+    public int countBlocks(int row){
+        int counter = 0;
+        for (int column = 0; column < gameGrid[row].length; column++) {
+            if (gameGrid[row][column] != null) {
+                counter++;
+            }
+        }
+        return counter;
+    }
+    
+    
     public void speed() {
 
     }
 
     public void eliminateBlocks() {
-        if (currentRow < gameGrid.length - 1) {
-            for (int column = 0; column < gameGrid[currentRow].length; column++) {
+        if (getCurrentRow() < getGameGrid().length - 1) {
+            for (int column = 0; column < getGameGrid()[getCurrentRow()].length; column++) {
 
-                if ((gameGrid[currentRow][column] == null) && (gameGrid[currentRow + 1][column] == null)) {
+                if ((getGameGrid()[getCurrentRow()][column] == null) && (getGameGrid()[getCurrentRow() + 1][column] == null)) {
 
                 }
 
-                if ((gameGrid[currentRow][column] != null) && (gameGrid[currentRow + 1][column] == null)) {
-                    gameGrid[currentRow][column] = null;
+                if ((getGameGrid()[getCurrentRow()][column] != null) && (getGameGrid()[getCurrentRow() + 1][column] == null)) {
+                    getGameGrid()[getCurrentRow()][column] = null;
                 }
 
             }
@@ -90,15 +95,15 @@ public final class StackData {
         // make sure you don't go outside of structure
 
         int addCounter = 0;
-        if (gameGrid != null) {
-            for (int column = 0; column < gameGrid[row].length; column++) {
+        if (getGameGrid() != null) {
+            for (int column = 0; column < getGameGrid()[row].length; column++) {
                 //clear the cell
-                gameGrid[row][column] = null;
+                getGameGrid()[row][column] = null;
 
                 //add a block if required
                 if (addCounter < numberToAdd) {
                     addCounter++;
-                    gameGrid[row][column] = new Block(column, row, cellData);
+                    getGameGrid()[row][column] = new Block(column, row, getCellData());
                 }
             }
         }
@@ -109,43 +114,39 @@ public final class StackData {
 
         // check if you're at the end of the currentRow
         //if yes reverse the direction
-        if (direction == Direction.RIGHT) {
+        if (getDirection() == Direction.RIGHT) {
             //if there is a block in the rightmost column, then we need to reverse direction
-            if (gameGrid[currentRow][gameGrid[currentRow].length - 1] != null) {
-                direction = Direction.LEFT;
+            if (getGameGrid()[getCurrentRow()][getGameGrid()[getCurrentRow()].length - 1] != null) {
+                setDirection(Direction.LEFT);
             }
         } else { // direct MUST be left
             //if there is a block in the lefttmost column, then we need to reverse direction
-            if (gameGrid[currentRow][0] != null) {
-                direction = Direction.RIGHT;
+            if (getGameGrid()[getCurrentRow()][0] != null) {
+                setDirection(Direction.RIGHT);
 
             }
         }
 
         //if moving to the right increase the column number for all the blocks by 1
-        if (direction == Direction.RIGHT) {
-            for (int column = gameGrid[currentRow].length - 2; column >= 0; column--) {
+        if (getDirection() == Direction.RIGHT) {
+            for (int column = getGameGrid()[getCurrentRow()].length - 2; column >= 0; column--) {
 //                if there is a block, then move it to the RIGHT
-                if (gameGrid[currentRow][column] != null) {
-                    gameGrid[currentRow][column + 1] = gameGrid[currentRow][column];
-                    gameGrid[currentRow][column] = null;
-                    gameGrid[currentRow][column + 1].setX(column + 1);
+                if (getGameGrid()[getCurrentRow()][column] != null) {
+                    getGameGrid()[getCurrentRow()][column + 1] = getGameGrid()[getCurrentRow()][column];
+                    getGameGrid()[getCurrentRow()][column] = null;
+                    getGameGrid()[getCurrentRow()][column + 1].setX(column + 1);
                 }
             }
-        }
+        } else if (getDirection() == Direction.STOP) {
 
-        if (direction == Direction.STOP) {
-
-        }
-
-        //if moving to the left decrease the column number for all the blocks by 1
-        if (direction == Direction.LEFT) {
-            for (int column = 1; column < gameGrid[currentRow].length; column++) {
+        } else if (getDirection() == Direction.LEFT) {
+            //if moving to the left decrease the column number for all the blocks by 1
+            for (int column = 1; column < getGameGrid()[getCurrentRow()].length; column++) {
 //
-                if (gameGrid[currentRow][column] != null) {
-                    gameGrid[currentRow][column - 1] = gameGrid[currentRow][column];
-                    gameGrid[currentRow][column] = null;
-                    gameGrid[currentRow][column - 1].setX(column - 1);
+                if (getGameGrid()[getCurrentRow()][column] != null) {
+                    getGameGrid()[getCurrentRow()][column - 1] = getGameGrid()[getCurrentRow()][column];
+                    getGameGrid()[getCurrentRow()][column] = null;
+                    getGameGrid()[getCurrentRow()][column - 1].setX(column - 1);
                 }
             }
         }
@@ -156,4 +157,97 @@ public final class StackData {
         // differetn block counts for (later)
     }
 
+//<editor-fold defaultstate="collapsed" desc="Properties">
+    private CellDataProviderIntf cellData;
+    private Speed speed = Speed.SLOW;
+    private int currentRow = 14;                      //how to ask the grid for the row number? game grid? why isn't it grid.getRows()
+    private Direction direction = Direction.RIGHT;
+    private GameState state;
+
+    private Block[][] gameGrid;
+
+    /**
+     * @return the cellData
+     */
+    public CellDataProviderIntf getCellData() {
+        return cellData;
+    }
+
+    /**
+     * @param cellData the cellData to set
+     */
+    public void setCellData(CellDataProviderIntf cellData) {
+        this.cellData = cellData;
+    }
+
+    /**
+     * @return the speed
+     */
+    public Speed getSpeed() {
+        return speed;
+    }
+
+    /**
+     * @param speed the speed to set
+     */
+    public void setSpeed(Speed speed) {
+        this.speed = speed;
+    }
+
+    /**
+     * @return the currentRow
+     */
+    public int getCurrentRow() {
+        return currentRow;
+    }
+
+    /**
+     * @param currentRow the currentRow to set
+     */
+    public void setCurrentRow(int currentRow) {
+        this.currentRow = currentRow;
+    }
+
+    /**
+     * @return the direction
+     */
+    public Direction getDirection() {
+        return direction;
+    }
+
+    /**
+     * @param direction the direction to set
+     */
+    public void setDirection(Direction direction) {
+        this.direction = direction;
+    }
+
+    /**
+     * @return the state
+     */
+    public GameState getState() {
+        return state;
+    }
+
+    /**
+     * @param state the state to set
+     */
+    public void setState(GameState state) {
+        this.state = state;
+    }
+
+    /**
+     * @return the gameGrid
+     */
+    public Block[][] getGameGrid() {
+        return gameGrid;
+    }
+
+    /**
+     * @param gameGrid the gameGrid to set
+     */
+    public void setGameGrid(Block[][] gameGrid) {
+        this.gameGrid = gameGrid;
+    }
+//</editor-fold>
 }
