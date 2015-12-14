@@ -5,7 +5,6 @@
  */
 package stacker;
 
-import grid.Grid;
 import java.awt.Graphics;
 
 /**
@@ -32,7 +31,7 @@ public final class StackData {
     public void stopMovement() {
 
         if (getCurrentRow() <= 0) {
-            setDirection(getDirection().STOP);
+            setDirection(Direction.STOP);
         }
 
         eliminateBlocks();
@@ -41,21 +40,21 @@ public final class StackData {
             setCurrentRow(getCurrentRow() - 1);
 
             int blocksToAdd = 3;
-            
-            if (getCurrentRow() <= 11) {
-                blocksToAdd =  2;
-            } else if (getCurrentRow() <= 5) {
-                blocksToAdd =  1;
+
+            if (getCurrentRow() <= getChangeBlocksToAddFrom3to2()) {
+                blocksToAdd = 2;
+            } else if (getCurrentRow() <= getChangeBlocksToAddFrom2to1()) {
+                blocksToAdd = 1;
             }
 
-            if (currentRow < gameGrid.length - 1){
-                blocksToAdd = Math.min(countBlocks(currentRow + 1), blocksToAdd);            
+            if (currentRow < gameGrid.length - 1) {
+                blocksToAdd = Math.min(countBlocks(currentRow + 1), blocksToAdd);
             }
             addBlocksToRow(getCurrentRow(), blocksToAdd);
         }
     }
 
-    public int countBlocks(int row){
+    public int countBlocks(int row) {
         int counter = 0;
         for (int column = 0; column < gameGrid[row].length; column++) {
             if (gameGrid[row][column] != null) {
@@ -64,8 +63,7 @@ public final class StackData {
         }
         return counter;
     }
-    
-    
+
     public void speed() {
 
     }
@@ -73,10 +71,6 @@ public final class StackData {
     public void eliminateBlocks() {
         if (getCurrentRow() < getGameGrid().length - 1) {
             for (int column = 0; column < getGameGrid()[getCurrentRow()].length; column++) {
-
-                if ((getGameGrid()[getCurrentRow()][column] == null) && (getGameGrid()[getCurrentRow() + 1][column] == null)) {
-
-                }
 
                 if ((getGameGrid()[getCurrentRow()][column] != null) && (getGameGrid()[getCurrentRow() + 1][column] == null)) {
                     getGameGrid()[getCurrentRow()][column] = null;
@@ -151,10 +145,6 @@ public final class StackData {
             }
         }
 
-        // make it move automagically
-        // make different speeds )(later)
-        // set currentRow logic (stop, elimnate, new currentRow)
-        // differetn block counts for (later)
     }
 
 //<editor-fold defaultstate="collapsed" desc="Properties">
@@ -163,7 +153,8 @@ public final class StackData {
     private int currentRow = 14;                      //how to ask the grid for the row number? game grid? why isn't it grid.getRows()
     private Direction direction = Direction.RIGHT;
     private GameState state;
-
+    private int changeBlocksToAddFrom3to2 = 11;
+    private int changeBlocksToAddFrom2to1 = 5;
     private Block[][] gameGrid;
 
     /**
@@ -249,5 +240,34 @@ public final class StackData {
     public void setGameGrid(Block[][] gameGrid) {
         this.gameGrid = gameGrid;
     }
+
+    /**
+     * @return the changeBlocksToAddFrom3to2
+     */
+    public int getChangeBlocksToAddFrom3to2() {
+        return changeBlocksToAddFrom3to2;
+    }
+
+    /**
+     * @param changeBlocksToAddFrom3to2 the changeBlocksToAddFrom3to2 to set
+     */
+    public void setChangeBlocksToAddFrom3to2(int changeBlocksToAddFrom3to2) {
+        this.changeBlocksToAddFrom3to2 = changeBlocksToAddFrom3to2;
+    }
+
+    /**
+     * @return the changeBlocksToAddFrom2to1
+     */
+    public int getChangeBlocksToAddFrom2to1() {
+        return changeBlocksToAddFrom2to1;
+    }
+
+    /**
+     * @param changeBlocksToAddFrom2to1 the changeBlocksToAddFrom2to1 to set
+     */
+    public void setChangeBlocksToAddFrom2to1(int changeBlocksToAddFrom2to1) {
+        this.changeBlocksToAddFrom2to1 = changeBlocksToAddFrom2to1;
+    }
 //</editor-fold>
+
 }

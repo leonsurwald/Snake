@@ -5,6 +5,7 @@
  */
 package stacker;
 
+import audio.AudioPlayer;
 import environment.Environment;
 import grid.Grid;
 import java.awt.Color;
@@ -49,7 +50,7 @@ class GameSurface extends Environment implements CellDataProviderIntf {
 
     int counter;
     double moveDelay = 0;
-    double moveDelayLimit = 5;
+    double moveDelayLimit = 4;
 
     @Override
     public void timerTaskHandler() {                            //Moving Objects, checks for intersection
@@ -68,7 +69,7 @@ class GameSurface extends Environment implements CellDataProviderIntf {
     public void keyPressedHandler(KeyEvent e) {
         if (e.getKeyCode() == KeyEvent.VK_SPACE) {
             stackData.stopMovement();
-          
+            AudioPlayer.play("/stacker/gunshot.wav/");
         }
     }
 
