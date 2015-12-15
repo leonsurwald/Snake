@@ -43,7 +43,8 @@ public final class StackData {
 
             if (getCurrentRow() <= getChangeBlocksToAddFrom3to2()) {
                 blocksToAdd = 2;
-            } else if (getCurrentRow() <= getChangeBlocksToAddFrom2to1()) {
+            }
+            if (getCurrentRow() <= getChangeBlocksToAddFrom2to1()) {
                 blocksToAdd = 1;
             }
 
@@ -62,10 +63,6 @@ public final class StackData {
             }
         }
         return counter;
-    }
-
-    public void speed() {
-
     }
 
     public void eliminateBlocks() {
@@ -105,6 +102,15 @@ public final class StackData {
     }
 
     public void move() {
+        if (moveDelayCounter >= speed.getValue()) {
+            moveBlocks();
+            moveDelayCounter = 0;
+        } else {
+            moveDelayCounter++;
+        }
+    }
+
+    private void moveBlocks() {
 
         // check if you're at the end of the currentRow
         //if yes reverse the direction
@@ -149,7 +155,10 @@ public final class StackData {
 
 //<editor-fold defaultstate="collapsed" desc="Properties">
     private CellDataProviderIntf cellData;
+
     private Speed speed = Speed.SLOW;
+    private int moveDelayCounter = 0;
+
     private int currentRow = 14;                      //how to ask the grid for the row number? game grid? why isn't it grid.getRows()
     private Direction direction = Direction.RIGHT;
     private GameState state;

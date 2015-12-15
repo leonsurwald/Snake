@@ -55,12 +55,13 @@ class GameSurface extends Environment implements CellDataProviderIntf {
     @Override
     public void timerTaskHandler() {                            //Moving Objects, checks for intersection
         if (stackData != null) {
-            if (moveDelay >= moveDelayLimit) {
-                stackData.move();
-                moveDelay = 0;
-            } else {
-                moveDelay++;
-            }
+            stackData.move();
+//            if (moveDelay >= moveDelayLimit) {
+//                stackData.move();
+//                moveDelay = 0;
+//            } else {
+//                moveDelay++;
+//            }
         }
 
     }
@@ -71,6 +72,19 @@ class GameSurface extends Environment implements CellDataProviderIntf {
             stackData.stopMovement();
             AudioPlayer.play("/stacker/gunshot.wav/");
         }
+        
+        if (e.getKeyCode() == KeyEvent.VK_1) {
+            stackData.setSpeed(Speed.SLOW);
+        }else if (e.getKeyCode() == KeyEvent.VK_2) {
+            stackData.setSpeed(Speed.MEDIUM);
+        } else if (e.getKeyCode() == KeyEvent.VK_3) {
+            stackData.setSpeed(Speed.FAST);
+        } else if (e.getKeyCode() == KeyEvent.VK_4) {
+            stackData.setSpeed(Speed.CRAZY);
+        }
+        
+        
+        
     }
 
     @Override
