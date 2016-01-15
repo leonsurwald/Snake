@@ -10,16 +10,16 @@ package stacker;
  * @author leonsurwald
  */
 public enum Speed {
-    SLOW(5), MEDIUM(4), FAST(3), CRAZY(2);
-    
-    
-    private Speed(int value){
+
+    SLOW(4), MEDIUM(3), FAST(2), CRAZY(1);
+
+    private Speed(int value) {
         this.value = value;
     }
-    
+
 //<editor-fold defaultstate="collapsed" desc="Properties">
     private int value;
-    
+
     /**
      * @return the value
      */

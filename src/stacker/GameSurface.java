@@ -28,7 +28,7 @@ class GameSurface extends Environment implements CellDataProviderIntf {
 
     public GameSurface() {
         this.setBackground(Color.BLACK);
-        grid = new Grid(7, 15, 30, 30, new Point(350, 50), Color.DARK_GRAY);
+        grid = new Grid(7, 15, 35, 35, new Point(350, 50), Color.DARK_GRAY);
 
         stackData = new StackData(grid.getRows(), grid.getColumns(), this);
         stackData.addBlocksToRow(14, 3);
@@ -70,37 +70,14 @@ class GameSurface extends Environment implements CellDataProviderIntf {
     public void keyPressedHandler(KeyEvent e) {
         if (e.getKeyCode() == KeyEvent.VK_SPACE) {
             stackData.stopMovement();
-            AudioPlayer.play("/stacker/gunshot.wav/");
+            AudioPlayer.play("/stacker/woosh.wav/");
         }
-        
-        if (e.getKeyCode() == KeyEvent.VK_1) {
-            stackData.setSpeed(Speed.SLOW);
-        }else if (e.getKeyCode() == KeyEvent.VK_2) {
-            stackData.setSpeed(Speed.MEDIUM);
-        } else if (e.getKeyCode() == KeyEvent.VK_3) {
-            stackData.setSpeed(Speed.FAST);
-        } else if (e.getKeyCode() == KeyEvent.VK_4) {
-            stackData.setSpeed(Speed.CRAZY);
-        }
-        
-        
-        
+
     }
 
     @Override
     public void keyReleasedHandler(KeyEvent e) {
-//        if (e.getKeyCode() == KeyEvent.VK_A) {
-//            System.out.println("GO LEFT");
-//        } else if (e.getKeyCode() == KeyEvent.VK_D) {
-//            System.out.println("GO RIGHT");
-//        } else if (e.getKeyCode() == KeyEvent.VK_W) {
-//            System.out.println("GO UP");
-//        } else if (e.getKeyCode() == KeyEvent.VK_S) {
-//            System.out.println("GO DOWN");
-//        }
-//        if (e.getKeyCode() == KeyEvent.VK_SPACE) {
-//            stackData.eliminateBlocks();   //change to ask grid
-//        }
+
     }
 
     @Override

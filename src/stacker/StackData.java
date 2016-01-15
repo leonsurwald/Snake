@@ -108,6 +108,24 @@ public final class StackData {
         } else {
             moveDelayCounter++;
         }
+        changeSpeed();
+    }
+
+    public void changeSpeed() {
+
+        if (getCurrentRow() <= 1) {
+            setSpeed(Speed.CRAZY);
+        } else if (getCurrentRow() <= 3) {
+            setSpeed(Speed.FAST);
+        } else if (getCurrentRow() <= 7) {
+            setSpeed(Speed.MEDIUM);
+        } else if (getCurrentRow() <= 15) {
+            setSpeed(Speed.SLOW);
+        }
+    }
+
+    private void deleteBlocks() {
+
     }
 
     private void moveBlocks() {
