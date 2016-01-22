@@ -11,7 +11,7 @@ package stacker;
  */
 public enum Speed {
 
-    SLOW(4), MEDIUM(3), FAST(2), CRAZY(1);
+    SLOW(4), MEDIUM(3), FAST(5/2), CRAZY(3/2);
 
     private Speed(int value) {
         this.value = value;
