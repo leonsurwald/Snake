@@ -5,7 +5,10 @@
  */
 package stacker;
 
+import java.awt.Dimension;
 import java.awt.Graphics;
+import java.awt.Toolkit;
+import javax.swing.JFrame;
 
 /**
  *
@@ -24,6 +27,7 @@ public final class StackData {
                 if (getGameGrid()[row][column] != null) {
                     getGameGrid()[row][column].draw(graphics);
                 }
+
             }
         }
     }

@@ -41,7 +41,7 @@ public class Block {
     private int y;
     private int x;
     private CellDataProviderIntf cellData;
-    private Color color = Color.CYAN;
+    private Color color = Color.RED;
 
     /**
      * @return the y

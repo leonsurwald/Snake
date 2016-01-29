@@ -28,7 +28,7 @@ class GameSurface extends Environment implements CellDataProviderIntf {
 
     public GameSurface() {
         this.setBackground(Color.BLACK);
-        grid = new Grid(7, 15, 35, 35, new Point(350, 50), Color.DARK_GRAY);
+        grid = new Grid(7, 15, 40, 40, new Point(350, 50), Color.DARK_GRAY);
 
         stackData = new StackData(grid.getRows(), grid.getColumns(), this);
         stackData.addBlocksToRow(14, 3);
