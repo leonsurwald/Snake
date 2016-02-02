@@ -5,10 +5,7 @@
  */
 package stacker;
 
-import java.awt.Dimension;
 import java.awt.Graphics;
-import java.awt.Toolkit;
-import javax.swing.JFrame;
 
 /**
  *
@@ -126,10 +123,6 @@ public final class StackData {
         } else if (getCurrentRow() <= 15) {
             setSpeed(Speed.SLOW);
         }
-    }
-
-    private void deleteBlocks() {
-
     }
 
     private void moveBlocks() {

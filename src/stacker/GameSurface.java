@@ -25,10 +25,11 @@ class GameSurface extends Environment implements CellDataProviderIntf {
     Grid grid;
 //    private ArrayList<Block> blocks;
     private StackData stackData;
+    private GameState gameState = GameState.MENU;
 
     public GameSurface() {
-        this.setBackground(Color.BLACK);
-        grid = new Grid(7, 15, 40, 40, new Point(350, 50), Color.DARK_GRAY);
+
+        grid = new Grid(7, 15, 35, 35, new Point(300, 50), Color.DARK_GRAY);
 
         stackData = new StackData(grid.getRows(), grid.getColumns(), this);
         stackData.addBlocksToRow(14, 3);
@@ -68,11 +69,21 @@ class GameSurface extends Environment implements CellDataProviderIntf {
 
     @Override
     public void keyPressedHandler(KeyEvent e) {
-        if (e.getKeyCode() == KeyEvent.VK_SPACE) {
-            stackData.stopMovement();
-            AudioPlayer.play("/stacker/woosh.wav/");
+
+        if (gameState == GameState.GAME) {
+            if (e.getKeyCode() == KeyEvent.VK_SPACE) {
+                stackData.stopMovement();
+                AudioPlayer.play("/stacker/woosh.wav/");
+            }
         }
 
+        if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
+            gameState = GameState.PAUSE;
+        }
+
+        if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+            gameState = GameState.GAME;
+        }
     }
 
     @Override
@@ -89,12 +100,43 @@ class GameSurface extends Environment implements CellDataProviderIntf {
     @Override
     public void paintEnvironment(Graphics graphics) {
 
-        if (grid != null) {
-            grid.paintComponent(graphics);
-        }
+        switch (gameState) {
+            case MENU:
 
-        if (stackData != null) {
-            stackData.draw(graphics);
+                this.setBackground(Color.RED);
+                graphics.drawString("HIT ENTER TO START", 10, 20);
+
+                break;
+
+            case PAUSE:
+
+                this.setBackground(Color.RED);
+                graphics.drawString("HIT ENTER TO RESUME", 10, 20);
+
+                break;
+
+            case GAME:
+
+                this.setBackground(Color.BLACK);
+
+                graphics.setColor(Color.red);
+                graphics.drawString("HIT ESCAPE TO PAUSE", 10, 20);
+                if (grid != null) {
+                    grid.paintComponent(graphics);
+                }
+
+                if (stackData != null) {
+                    stackData.draw(graphics);
+                }
+                
+                break;
+
+            case GAMEOVER:
+                
+                graphics.drawString("GAME OVER!", 10, 20);
+                
+                break;
+
         }
 
     }
