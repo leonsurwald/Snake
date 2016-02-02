@@ -69,11 +69,10 @@ public final class StackData {
     public void eliminateBlocks() {
         if (getCurrentRow() < getGameGrid().length - 1) {
             for (int column = 0; column < getGameGrid()[getCurrentRow()].length; column++) {
-
                 if ((getGameGrid()[getCurrentRow()][column] != null) && (getGameGrid()[getCurrentRow() + 1][column] == null)) {
                     getGameGrid()[getCurrentRow()][column] = null;
-                }
 
+                }
             }
         }
 //        //check if blocks in row below have same x values
@@ -114,9 +113,9 @@ public final class StackData {
 
     public void changeSpeed() {
 
-        if (getCurrentRow() <= 1) {
+        if (getCurrentRow() == 1) {
             setSpeed(Speed.CRAZY);
-        } else if (getCurrentRow() <= 3) {
+        } else if (getCurrentRow() == 2) {
             setSpeed(Speed.FAST);
         } else if (getCurrentRow() <= 7) {
             setSpeed(Speed.MEDIUM);
@@ -165,6 +164,10 @@ public final class StackData {
                 }
             }
         }
+
+    }
+
+    public void gameOver() {
 
     }
 
