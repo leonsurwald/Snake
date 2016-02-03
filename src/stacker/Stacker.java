@@ -6,6 +6,7 @@
 package stacker;
 
 import environment.ApplicationStarter;
+import java.awt.Dimension;
 
 /**
  *
@@ -17,7 +18,7 @@ public class Stacker {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        ApplicationStarter.run("Stacker", new GameSurface());
+        ApplicationStarter.run(new String[0], "Stacker", new Dimension(450, 850), new GameSurface());
     }
     
 }

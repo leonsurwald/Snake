@@ -113,9 +113,9 @@ public final class StackData {
 
     public void changeSpeed() {
 
-        if (getCurrentRow() == 1) {
+        if (getCurrentRow() == 0) {
             setSpeed(Speed.CRAZY);
-        } else if (getCurrentRow() == 2) {
+        } else if (getCurrentRow() == 1) {
             setSpeed(Speed.FAST);
         } else if (getCurrentRow() <= 7) {
             setSpeed(Speed.MEDIUM);

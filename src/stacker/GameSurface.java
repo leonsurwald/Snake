@@ -9,6 +9,7 @@ import audio.AudioPlayer;
 import environment.Environment;
 import grid.Grid;
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Point;
 import java.awt.event.KeyEvent;
@@ -29,7 +30,7 @@ class GameSurface extends Environment implements CellDataProviderIntf {
 
     public GameSurface() {
 
-        grid = new Grid(7, 15, 35, 35, new Point(300, 50), Color.DARK_GRAY);
+        grid = new Grid(7, 15, 50, 50, new Point(50, 50), Color.DARK_GRAY);
 
         stackData = new StackData(grid.getRows(), grid.getColumns(), this);
         stackData.addBlocksToRow(14, 3);
@@ -104,6 +105,7 @@ class GameSurface extends Environment implements CellDataProviderIntf {
             case MENU:
 
                 this.setBackground(Color.RED);
+                graphics.setFont(new Font("Impact", Font.BOLD, 15));
                 graphics.drawString("HIT ENTER TO START", 10, 20);
 
                 break;
@@ -111,6 +113,7 @@ class GameSurface extends Environment implements CellDataProviderIntf {
             case PAUSE:
 
                 this.setBackground(Color.RED);
+                graphics.setFont(new Font("Impact", Font.BOLD, 15));
                 graphics.drawString("HIT ENTER TO RESUME", 10, 20);
 
                 break;
@@ -120,6 +123,7 @@ class GameSurface extends Environment implements CellDataProviderIntf {
                 this.setBackground(Color.BLACK);
 
                 graphics.setColor(Color.red);
+                graphics.setFont(new Font("Impact", Font.BOLD, 15));
                 graphics.drawString("HIT ESCAPE TO PAUSE", 10, 20);
                 if (grid != null) {
                     grid.paintComponent(graphics);
@@ -128,13 +132,13 @@ class GameSurface extends Environment implements CellDataProviderIntf {
                 if (stackData != null) {
                     stackData.draw(graphics);
                 }
-                
+
                 break;
 
             case GAMEOVER:
-                
+
                 graphics.drawString("GAME OVER!", 10, 20);
-                
+
                 break;
 
         }
