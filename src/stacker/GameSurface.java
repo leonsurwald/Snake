@@ -8,9 +8,11 @@ package stacker;
 import audio.AudioPlayer;
 import environment.Environment;
 import grid.Grid;
+import images.ResourceTools;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
+import java.awt.Image;
 import java.awt.Point;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
@@ -22,7 +24,8 @@ import java.awt.event.MouseEvent;
  * @author leonsurwald
  */
 class GameSurface extends Environment implements CellDataProviderIntf {
-
+    
+    Image pauseScreen;
     Grid grid;
 //    private ArrayList<Block> blocks;
     private StackData stackData;
@@ -31,7 +34,7 @@ class GameSurface extends Environment implements CellDataProviderIntf {
     public GameSurface() {
 
         grid = new Grid(7, 15, 50, 50, new Point(50, 50), Color.DARK_GRAY);
-
+        pauseScreen = ResourceTools.loadImageFromResource("stacker/pause.png");
         stackData = new StackData(grid.getRows(), grid.getColumns(), this);
         stackData.addBlocksToRow(14, 3);
 
@@ -115,7 +118,7 @@ class GameSurface extends Environment implements CellDataProviderIntf {
                 this.setBackground(Color.RED);
                 graphics.setFont(new Font("Impact", Font.BOLD, 15));
                 graphics.drawString("HIT ENTER TO RESUME", 10, 20);
-
+                graphics.drawImage(pauseScreen, 70, 200, 300, 300, this);
                 break;
 
             case GAME:
