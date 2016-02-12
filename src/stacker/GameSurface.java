@@ -6,6 +6,10 @@
 package stacker;
 
 import audio.AudioPlayer;
+import audio.Playlist;
+import audio.SoundManager;
+import audio.Source;
+import audio.Track;
 import environment.Environment;
 import grid.Grid;
 import images.ResourceTools;
@@ -16,6 +20,7 @@ import java.awt.Image;
 import java.awt.Point;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
+import java.util.ArrayList;
 //import java.util.ArrayList;
 
 // bottom 3 rows 3 blocks; middle 6 rows 2 blocks; 6 top rows 1 block
@@ -24,8 +29,9 @@ import java.awt.event.MouseEvent;
  * @author leonsurwald
  */
 class GameSurface extends Environment implements CellDataProviderIntf {
-    
+
     Image pauseScreen;
+    Image playScreen;
     Grid grid;
 //    private ArrayList<Block> blocks;
     private StackData stackData;
@@ -35,8 +41,11 @@ class GameSurface extends Environment implements CellDataProviderIntf {
 
         grid = new Grid(7, 15, 50, 50, new Point(50, 50), Color.DARK_GRAY);
         pauseScreen = ResourceTools.loadImageFromResource("stacker/pause.png");
+        playScreen = ResourceTools.loadImageFromResource("stacker/play.png");
         stackData = new StackData(grid.getRows(), grid.getColumns(), this);
         stackData.addBlocksToRow(14, 3);
+
+        setUpSound();
 
     }
 
@@ -48,6 +57,17 @@ class GameSurface extends Environment implements CellDataProviderIntf {
 //
 //        blocks.add(new Block(grid.getRandomGridLocation(), this));
 //    }
+    SoundManager soundManager;
+    public static final String SOUND_Woosh = "Woosh";
+
+    public void setUpSound() {
+        //set up a list of tracks
+        ArrayList<Track> tracks = new ArrayList<>();
+        tracks.add(new Track(SOUND_Woosh, Source.RESOURCE, "/stacker/woosh.wav"));
+        Playlist playlist = new Playlist(tracks);
+        soundManager = new SoundManager(playlist);
+    }
+
     @Override
     public void initializeEnvironment() {
 
@@ -110,7 +130,7 @@ class GameSurface extends Environment implements CellDataProviderIntf {
                 this.setBackground(Color.RED);
                 graphics.setFont(new Font("Impact", Font.BOLD, 15));
                 graphics.drawString("HIT ENTER TO START", 10, 20);
-
+                graphics.drawImage(playScreen, 70, 200, 300, 300, this);
                 break;
 
             case PAUSE:
