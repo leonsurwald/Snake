@@ -32,6 +32,7 @@ class GameSurface extends Environment implements CellDataProviderIntf {
 
     Image pauseScreen;
     Image playScreen;
+    Image gameOverScreen;
     Grid grid;
 //    private ArrayList<Block> blocks;
     private StackData stackData;
@@ -42,6 +43,7 @@ class GameSurface extends Environment implements CellDataProviderIntf {
         grid = new Grid(7, 15, 50, 50, new Point(50, 50), Color.DARK_GRAY);
         pauseScreen = ResourceTools.loadImageFromResource("stacker/pause.png");
         playScreen = ResourceTools.loadImageFromResource("stacker/play.png");
+        gameOverScreen = ResourceTools.loadImageFromResource("stacker/gameOver.png");
         stackData = new StackData(grid.getRows(), grid.getColumns(), this);
         stackData.addBlocksToRow(14, 3);
 
@@ -108,6 +110,9 @@ class GameSurface extends Environment implements CellDataProviderIntf {
         if (e.getKeyCode() == KeyEvent.VK_ENTER) {
             gameState = GameState.GAME;
         }
+        if (e.getKeyCode() == KeyEvent.VK_0) {
+            gameState = GameState.GAMEOVER;
+        }
     }
 
     @Override
@@ -143,9 +148,9 @@ class GameSurface extends Environment implements CellDataProviderIntf {
 
             case GAME:
 
-                this.setBackground(Color.BLACK);
+                this.setBackground(Color.RED);
 
-                graphics.setColor(Color.red);
+                graphics.setColor(Color.BLACK);
                 graphics.setFont(new Font("Impact", Font.BOLD, 15));
                 graphics.drawString("HIT ESCAPE TO PAUSE", 10, 20);
                 if (grid != null) {
@@ -159,8 +164,10 @@ class GameSurface extends Environment implements CellDataProviderIntf {
                 break;
 
             case GAMEOVER:
-
+                graphics.setColor(Color.BLACK);
+                graphics.setFont(new Font("Impact", Font.BOLD, 15));
                 graphics.drawString("GAME OVER!", 10, 20);
+                graphics.drawImage(gameOverScreen, 70, 200, 300, 300, this);
 
                 break;
 
