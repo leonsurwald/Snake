@@ -76,7 +76,7 @@ public final class StackData {
             }
         }
 //        //check if blocks in row below have same x values
-//        //if not delete blocks with new x values in current row
+//        //if not xx blocks with new x values in current row
 //        //remaining number of blocks is the new value of numberToAdd
     }
 
@@ -171,7 +171,10 @@ public final class StackData {
 
     }
 
-//<editor-fold defaultstate="collapsed" desc="Properties">
+    public void restart(int row) {
+
+    }
+    //<editor-fold defaultstate="collapsed" desc="Properties">
     private CellDataProviderIntf cellData;
 
     private Speed speed = Speed.SLOW;

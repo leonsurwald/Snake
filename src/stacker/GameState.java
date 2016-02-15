@@ -10,5 +10,5 @@ package stacker;
  * @author leonsurwald
  */
 public enum GameState {
-    MENU, PAUSE, GAME, GAMEOVER
+    MENU, PAUSE, GAME, GAMEOVER, RESTART
 }

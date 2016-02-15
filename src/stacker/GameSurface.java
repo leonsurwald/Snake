@@ -43,7 +43,7 @@ class GameSurface extends Environment implements CellDataProviderIntf {
         grid = new Grid(7, 15, 50, 50, new Point(50, 50), Color.DARK_GRAY);
         pauseScreen = ResourceTools.loadImageFromResource("stacker/pause.png");
         playScreen = ResourceTools.loadImageFromResource("stacker/play.png");
-        gameOverScreen = ResourceTools.loadImageFromResource("stacker/gameOver.png");
+        gameOverScreen = ResourceTools.loadImageFromResource("stacker/scull.png");
         stackData = new StackData(grid.getRows(), grid.getColumns(), this);
         stackData.addBlocksToRow(14, 3);
 
@@ -107,11 +107,15 @@ class GameSurface extends Environment implements CellDataProviderIntf {
             gameState = GameState.PAUSE;
         }
 
-        if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+        if (e.getKeyCode() == KeyEvent.VK_SPACE) {
             gameState = GameState.GAME;
         }
         if (e.getKeyCode() == KeyEvent.VK_0) {
             gameState = GameState.GAMEOVER;
+        }
+        if (e.getKeyCode() == KeyEvent.VK_SPACE && gameState == GameState.GAMEOVER) {
+            gameState = GameState.RESTART;
+
         }
     }
 
@@ -133,26 +137,31 @@ class GameSurface extends Environment implements CellDataProviderIntf {
             case MENU:
 
                 this.setBackground(Color.RED);
+
+                graphics.setColor(Color.BLACK);
                 graphics.setFont(new Font("Impact", Font.BOLD, 15));
-                graphics.drawString("HIT ENTER TO START", 10, 20);
+                graphics.drawString("HIT SPACE TO START", 10, 20);
                 graphics.drawImage(playScreen, 70, 200, 300, 300, this);
                 break;
 
             case PAUSE:
 
                 this.setBackground(Color.RED);
+
+                graphics.setColor(Color.BLACK);
                 graphics.setFont(new Font("Impact", Font.BOLD, 15));
-                graphics.drawString("HIT ENTER TO RESUME", 10, 20);
+                graphics.drawString("HIT SPACE TO RESUME", 10, 20);
                 graphics.drawImage(pauseScreen, 70, 200, 300, 300, this);
                 break;
 
             case GAME:
 
-                this.setBackground(Color.RED);
+                this.setBackground(Color.BLACK);
 
-                graphics.setColor(Color.BLACK);
+                graphics.setColor(Color.RED);
                 graphics.setFont(new Font("Impact", Font.BOLD, 15));
                 graphics.drawString("HIT ESCAPE TO PAUSE", 10, 20);
+
                 if (grid != null) {
                     grid.paintComponent(graphics);
                 }
@@ -164,10 +173,25 @@ class GameSurface extends Environment implements CellDataProviderIntf {
                 break;
 
             case GAMEOVER:
-                graphics.setColor(Color.BLACK);
+
+                this.setBackground(Color.BLACK);
+
+                graphics.setColor(Color.RED);
                 graphics.setFont(new Font("Impact", Font.BOLD, 15));
-                graphics.drawString("GAME OVER!", 10, 20);
+                graphics.drawString("PRESS SPACE TO RESTART!", 10, 20);
                 graphics.drawImage(gameOverScreen, 70, 200, 300, 300, this);
+
+                break;
+
+            case RESTART:
+
+                if (grid != null) {
+                    grid.paintComponent(graphics);
+                }
+
+                if (stackData != null) {
+                    stackData.draw(graphics);
+                }
 
                 break;
 
