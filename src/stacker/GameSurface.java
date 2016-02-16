@@ -28,7 +28,7 @@ import java.util.ArrayList;
  *
  * @author leonsurwald
  */
-class GameSurface extends Environment implements CellDataProviderIntf {
+class GameSurface extends Environment implements CellDataProviderIntf, StackDataEventListenerIntf {
 
     Image pauseScreen;
     Image playScreen;
@@ -41,11 +41,13 @@ class GameSurface extends Environment implements CellDataProviderIntf {
     public GameSurface() {
 
         grid = new Grid(7, 15, 50, 50, new Point(50, 50), Color.DARK_GRAY);
+
         pauseScreen = ResourceTools.loadImageFromResource("stacker/pause.png");
         playScreen = ResourceTools.loadImageFromResource("stacker/play.png");
         gameOverScreen = ResourceTools.loadImageFromResource("stacker/scull.png");
-        stackData = new StackData(grid.getRows(), grid.getColumns(), this);
-        stackData.addBlocksToRow(14, 3);
+
+        stackData = new StackData(grid.getRows(), grid.getColumns(), this, this);
+        stackData.startGame();
 
         setUpSound();
 
@@ -105,17 +107,13 @@ class GameSurface extends Environment implements CellDataProviderIntf {
 
         if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
             gameState = GameState.PAUSE;
-        }
-
-        if (e.getKeyCode() == KeyEvent.VK_SPACE) {
+        } else if (e.getKeyCode() == KeyEvent.VK_ENTER) {
             gameState = GameState.GAME;
-        }
-        if (e.getKeyCode() == KeyEvent.VK_0) {
+        } else if (e.getKeyCode() == KeyEvent.VK_0) {
             gameState = GameState.GAMEOVER;
-        }
-        if (e.getKeyCode() == KeyEvent.VK_SPACE && gameState == GameState.GAMEOVER) {
-            gameState = GameState.RESTART;
-
+        } else if (e.getKeyCode() == KeyEvent.VK_ENTER && gameState == GameState.GAMEOVER) {
+            gameState = GameState.GAME;
+            stackData.startGame();
         }
     }
 
@@ -140,7 +138,7 @@ class GameSurface extends Environment implements CellDataProviderIntf {
 
                 graphics.setColor(Color.BLACK);
                 graphics.setFont(new Font("Impact", Font.BOLD, 15));
-                graphics.drawString("HIT SPACE TO START", 10, 20);
+                graphics.drawString("HIT ENTER TO START", 10, 20);
                 graphics.drawImage(playScreen, 70, 200, 300, 300, this);
                 break;
 
@@ -150,7 +148,7 @@ class GameSurface extends Environment implements CellDataProviderIntf {
 
                 graphics.setColor(Color.BLACK);
                 graphics.setFont(new Font("Impact", Font.BOLD, 15));
-                graphics.drawString("HIT SPACE TO RESUME", 10, 20);
+                graphics.drawString("HIT ENTER TO RESUME", 10, 20);
                 graphics.drawImage(pauseScreen, 70, 200, 300, 300, this);
                 break;
 
@@ -178,7 +176,7 @@ class GameSurface extends Environment implements CellDataProviderIntf {
 
                 graphics.setColor(Color.RED);
                 graphics.setFont(new Font("Impact", Font.BOLD, 15));
-                graphics.drawString("PRESS SPACE TO RESTART!", 10, 20);
+                graphics.drawString("PRESS ENTER TO RESTART!", 10, 20);
                 graphics.drawImage(gameOverScreen, 70, 200, 300, 300, this);
 
                 break;
@@ -192,6 +190,17 @@ class GameSurface extends Environment implements CellDataProviderIntf {
                 if (stackData != null) {
                     stackData.draw(graphics);
                 }
+
+                break;
+
+            case WON:
+
+                this.setBackground(Color.BLACK);
+
+                graphics.setColor(Color.RED);
+                graphics.setFont(new Font("Impact", Font.BOLD, 15));
+                graphics.drawString("PRESS ENTER TO RESTART!", 10, 20);
+                graphics.drawImage(WonScreen, 70, 200, 300, 300, this);
 
                 break;
 
@@ -220,6 +229,17 @@ class GameSurface extends Environment implements CellDataProviderIntf {
     public int getCellTopLeftY(int x, int y
     ) {
         return grid.getCellSystemCoordinate(x, y).y;
+    }
+//</editor-fold>
+
+//<editor-fold defaultstate="collapsed" desc="StackDataEventListenerIntf">
+    @Override
+    public void onEvent(String eventType) {
+//        System.out.println("Event = " + eventType);
+
+        if (eventType.equals(StackDataEventListenerIntf.EVENT_GAME_OVER)) {
+            gameState = GameState.GAMEOVER;
+        }
     }
 //</editor-fold>
 

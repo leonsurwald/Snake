@@ -9,6 +9,8 @@ package stacker;
  *
  * @author leonsurwald
  */
-public enum GameState {
-    MENU, PAUSE, GAME, GAMEOVER, RESTART, WON
+public interface StackDataEventListenerIntf {
+    public static final String EVENT_GAME_OVER = "GAMEOVER";
+    
+    public void onEvent(String eventType);
 }

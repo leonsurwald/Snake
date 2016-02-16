@@ -13,9 +13,10 @@ import java.awt.Graphics;
  */
 public final class StackData {
 
-    public StackData(int rows, int columns, CellDataProviderIntf cellData) {
+    public StackData(int rows, int columns, CellDataProviderIntf cellData, StackDataEventListenerIntf stackDataEvent) {
         gameGrid = new Block[rows][columns];
         this.cellData = cellData;
+        this.stackDataEvent = stackDataEvent;
     }
 
     public void draw(Graphics graphics) {
@@ -45,6 +46,7 @@ public final class StackData {
             if (getCurrentRow() <= getChangeBlocksToAddFrom3to2()) {
                 blocksToAdd = 2;
             }
+
             if (getCurrentRow() <= getChangeBlocksToAddFrom2to1()) {
                 blocksToAdd = 1;
             }
@@ -52,6 +54,12 @@ public final class StackData {
             if (currentRow < gameGrid.length - 1) {
                 blocksToAdd = Math.min(countBlocks(currentRow + 1), blocksToAdd);
             }
+
+            //if blocksToAdd = 0, then end the game
+            if (blocksToAdd <= 0) {
+                stackDataEvent.onEvent(StackDataEventListenerIntf.EVENT_GAME_OVER);
+            }
+
             addBlocksToRow(getCurrentRow(), blocksToAdd);
         }
     }
@@ -78,6 +86,24 @@ public final class StackData {
 //        //check if blocks in row below have same x values
 //        //if not xx blocks with new x values in current row
 //        //remaining number of blocks is the new value of numberToAdd
+    }
+
+    public void startGame() {
+
+        //clear out all the rows
+        for (int row = 0; row < getGameGrid().length; row++) {
+            for (int column = 0; column < getGameGrid()[row].length; column++) {
+                getGameGrid()[row][column] = null;
+            }
+        }
+
+        //add initial blocks
+//        addBlocksToRow(getGameGrid().length -1, 3);
+        addBlocksToRow(14, 3);
+
+        //set current row to the bottom row
+//        this.currentRow = getGameGrid().length-2;
+        this.currentRow = 14;
     }
 
     public void addBlocksToRow(int row, int numberToAdd) {
@@ -174,8 +200,10 @@ public final class StackData {
     public void restart(int row) {
 
     }
+
     //<editor-fold defaultstate="collapsed" desc="Properties">
     private CellDataProviderIntf cellData;
+    private final StackDataEventListenerIntf stackDataEvent;
 
     private Speed speed = Speed.SLOW;
     private int moveDelayCounter = 0;
