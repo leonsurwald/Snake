@@ -59,12 +59,13 @@ public final class StackData {
             if (blocksToAdd <= 0) {
                 stackDataEvent.onEvent(StackDataEventListenerIntf.EVENT_GAME_OVER);
             }
-            for (int column = 0; column < getGameGrid()[0].length; column++) {
-                if (getCurrentRow() == 0 & getGameGrid()[0][column] != null)  {
-                    stackDataEvent.onEvent(StackDataEventListenerIntf.EVENT_GAME_WON);
-                }
+
+            if (getCurrentRow() < 0) {
+                stackDataEvent.onEvent(StackDataEventListenerIntf.EVENT_GAME_WON);
             }
+
             addBlocksToRow(getCurrentRow(), blocksToAdd);
+
         }
     }
 

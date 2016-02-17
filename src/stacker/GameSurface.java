@@ -126,8 +126,7 @@ class GameSurface extends Environment implements CellDataProviderIntf, StackData
 
     @Override
     public void environmentMouseClicked(MouseEvent e) {
-//        System.out.println("Mouse clicked at " + e.getPoint());
-//        System.out.println("Mouse clicked in cell " + grid.getCellLocationFromSystemCoordinate(e.getPoint()));
+
     }
 
     @Override
@@ -155,7 +154,7 @@ class GameSurface extends Environment implements CellDataProviderIntf, StackData
                 break;
 
             case GAME:
-                               
+
                 this.setBackground(Color.BLACK);
 
                 graphics.setColor(Color.RED);
@@ -184,7 +183,7 @@ class GameSurface extends Environment implements CellDataProviderIntf, StackData
                 break;
 
             case RESTART:
-                
+
                 stackData.startGame();
 
                 if (grid != null) {
