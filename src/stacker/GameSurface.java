@@ -33,6 +33,8 @@ class GameSurface extends Environment implements CellDataProviderIntf, StackData
     Image pauseScreen;
     Image playScreen;
     Image gameOverScreen;
+    Image wonScreen;
+
     Grid grid;
 //    private ArrayList<Block> blocks;
     private StackData stackData;
@@ -45,6 +47,7 @@ class GameSurface extends Environment implements CellDataProviderIntf, StackData
         pauseScreen = ResourceTools.loadImageFromResource("stacker/pause.png");
         playScreen = ResourceTools.loadImageFromResource("stacker/play.png");
         gameOverScreen = ResourceTools.loadImageFromResource("stacker/scull.png");
+        wonScreen = ResourceTools.loadImageFromResource("stacker/won.png");
 
         stackData = new StackData(grid.getRows(), grid.getColumns(), this, this);
         stackData.startGame();
@@ -110,10 +113,9 @@ class GameSurface extends Environment implements CellDataProviderIntf, StackData
         } else if (e.getKeyCode() == KeyEvent.VK_ENTER) {
             gameState = GameState.GAME;
         } else if (e.getKeyCode() == KeyEvent.VK_0) {
-            gameState = GameState.GAMEOVER;
+            gameState = GameState.WON;
         } else if (e.getKeyCode() == KeyEvent.VK_ENTER && gameState == GameState.GAMEOVER) {
-            gameState = GameState.GAME;
-            stackData.startGame();
+            gameState = GameState.RESTART;
         }
     }
 
@@ -153,7 +155,7 @@ class GameSurface extends Environment implements CellDataProviderIntf, StackData
                 break;
 
             case GAME:
-
+                               
                 this.setBackground(Color.BLACK);
 
                 graphics.setColor(Color.RED);
@@ -176,12 +178,14 @@ class GameSurface extends Environment implements CellDataProviderIntf, StackData
 
                 graphics.setColor(Color.RED);
                 graphics.setFont(new Font("Impact", Font.BOLD, 15));
-                graphics.drawString("PRESS ENTER TO RESTART!", 10, 20);
+                graphics.drawString("PRESS ENTER TO RESTART", 10, 20);
                 graphics.drawImage(gameOverScreen, 70, 200, 300, 300, this);
 
                 break;
 
             case RESTART:
+                
+                stackData.startGame();
 
                 if (grid != null) {
                     grid.paintComponent(graphics);
@@ -200,7 +204,7 @@ class GameSurface extends Environment implements CellDataProviderIntf, StackData
                 graphics.setColor(Color.RED);
                 graphics.setFont(new Font("Impact", Font.BOLD, 15));
                 graphics.drawString("PRESS ENTER TO RESTART!", 10, 20);
-                graphics.drawImage(WonScreen, 70, 200, 300, 300, this);
+                graphics.drawImage(wonScreen, 70, 200, 300, 300, this);
 
                 break;
 
@@ -239,6 +243,9 @@ class GameSurface extends Environment implements CellDataProviderIntf, StackData
 
         if (eventType.equals(StackDataEventListenerIntf.EVENT_GAME_OVER)) {
             gameState = GameState.GAMEOVER;
+        }
+        if (eventType.equals(StackDataEventListenerIntf.EVENT_GAME_WON)) {
+            gameState = GameState.WON;
         }
     }
 //</editor-fold>

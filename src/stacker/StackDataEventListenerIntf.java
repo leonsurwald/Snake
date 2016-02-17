@@ -11,6 +11,8 @@ package stacker;
  */
 public interface StackDataEventListenerIntf {
     public static final String EVENT_GAME_OVER = "GAMEOVER";
+    public static final String EVENT_GAME_WON = "WON";
+
     
     public void onEvent(String eventType);
 }

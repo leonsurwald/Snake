@@ -59,7 +59,11 @@ public final class StackData {
             if (blocksToAdd <= 0) {
                 stackDataEvent.onEvent(StackDataEventListenerIntf.EVENT_GAME_OVER);
             }
-
+            for (int column = 0; column < getGameGrid()[0].length; column++) {
+                if (getCurrentRow() == 0 & getGameGrid()[0][column] != null)  {
+                    stackDataEvent.onEvent(StackDataEventListenerIntf.EVENT_GAME_WON);
+                }
+            }
             addBlocksToRow(getCurrentRow(), blocksToAdd);
         }
     }
@@ -90,10 +94,10 @@ public final class StackData {
 
     public void startGame() {
 
-        //clear out all the rows
         for (int row = 0; row < getGameGrid().length; row++) {
-            for (int column = 0; column < getGameGrid()[row].length; column++) {
+            for (int column = 0; column < getGameGrid()[row].length; column++) {    //getGameGrid()[row].length
                 getGameGrid()[row][column] = null;
+
             }
         }
 
