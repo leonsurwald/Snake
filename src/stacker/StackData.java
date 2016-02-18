@@ -94,6 +94,8 @@ public final class StackData {
     }
 
     public void startGame() {
+        
+        
 
         for (int row = 0; row < getGameGrid().length; row++) {
             for (int column = 0; column < getGameGrid()[row].length; column++) {    //getGameGrid()[row].length
