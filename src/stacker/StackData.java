@@ -56,7 +56,7 @@ public final class StackData {
             }
 
             //if blocksToAdd = 0, then end the game
-            if (blocksToAdd <= 0) {
+            if (blocksToAdd <= 0 ) {
                 stackDataEvent.onEvent(StackDataEventListenerIntf.EVENT_GAME_OVER);
             }
 
@@ -192,14 +192,6 @@ public final class StackData {
                 }
             }
         }
-
-    }
-
-    public void gameOver() {
-
-    }
-
-    public void restart(int row) {
 
     }
 
