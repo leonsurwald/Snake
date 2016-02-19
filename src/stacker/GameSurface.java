@@ -111,16 +111,17 @@ class GameSurface extends Environment implements CellDataProviderIntf, StackData
         if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
             gameState = GameState.PAUSE;
 
-        } else if (e.getKeyCode() == KeyEvent.VK_ENTER & gameState == GameState.MENU) {
+        } else if (e.getKeyCode() == KeyEvent.VK_ENTER && gameState == GameState.MENU) {
             gameState = GameState.GAME;
 
-        } else if (e.getKeyCode() == KeyEvent.VK_ENTER & gameState == GameState.PAUSE) {
+        } else if (e.getKeyCode() == KeyEvent.VK_ENTER && gameState == GameState.PAUSE) {
             gameState = GameState.GAME;
 
-        } else if (e.getKeyCode() == KeyEvent.VK_0) {
+        }
+        if (e.getKeyCode() == KeyEvent.VK_0)  {
             gameState = GameState.WON;
 
-        } else if (e.getKeyCode() == KeyEvent.VK_ENTER && gameState == GameState.GAMEOVER) {
+        } else if (e.getKeyCode() == KeyEvent.VK_ENTER && gameState == GameState.GAMEOVER || gameState == GameState.WON) {
             gameState = GameState.RESTART;
         }
     }

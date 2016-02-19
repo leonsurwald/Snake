@@ -38,7 +38,13 @@ public final class StackData {
 
         eliminateBlocks();
 
-        if (getCurrentRow() > 0) {
+        if (getCurrentRow() == 0) {
+            if (countBlocks(currentRow) > 0) {
+                stackDataEvent.onEvent(StackDataEventListenerIntf.EVENT_GAME_WON);
+            } else {
+                stackDataEvent.onEvent(StackDataEventListenerIntf.EVENT_GAME_OVER);
+            }
+        } else if (getCurrentRow() > 0) {
             setCurrentRow(getCurrentRow() - 1);
 
             int blocksToAdd = 3;
@@ -58,14 +64,9 @@ public final class StackData {
             //if blocksToAdd = 0, then end the game
             if (blocksToAdd <= 0 ) {
                 stackDataEvent.onEvent(StackDataEventListenerIntf.EVENT_GAME_OVER);
+            } else {
+                addBlocksToRow(getCurrentRow(), blocksToAdd);
             }
-
-            if (getCurrentRow() < 0) {
-                stackDataEvent.onEvent(StackDataEventListenerIntf.EVENT_GAME_WON);
-            }
-
-            addBlocksToRow(getCurrentRow(), blocksToAdd);
-
         }
     }
 
