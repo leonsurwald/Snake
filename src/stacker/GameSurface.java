@@ -110,27 +110,36 @@ class GameSurface extends Environment implements CellDataProviderIntf, StackData
 
         if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
             gameState = GameState.PAUSE;
-        } else if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+
+        } else if (e.getKeyCode() == KeyEvent.VK_ENTER & gameState == GameState.MENU) {
             gameState = GameState.GAME;
+
+        } else if (e.getKeyCode() == KeyEvent.VK_ENTER & gameState == GameState.PAUSE) {
+            gameState = GameState.GAME;
+
         } else if (e.getKeyCode() == KeyEvent.VK_0) {
             gameState = GameState.WON;
+
         } else if (e.getKeyCode() == KeyEvent.VK_ENTER && gameState == GameState.GAMEOVER) {
             gameState = GameState.RESTART;
         }
     }
 
     @Override
-    public void keyReleasedHandler(KeyEvent e) {
+    public void keyReleasedHandler(KeyEvent e
+    ) {
 
     }
 
     @Override
-    public void environmentMouseClicked(MouseEvent e) {
+    public void environmentMouseClicked(MouseEvent e
+    ) {
 
     }
 
     @Override
-    public void paintEnvironment(Graphics graphics) {
+    public void paintEnvironment(Graphics graphics
+    ) {
 
         switch (gameState) {
             case MENU:
@@ -186,13 +195,7 @@ class GameSurface extends Environment implements CellDataProviderIntf, StackData
 
                 stackData.startGame();
 
-                if (grid != null) {
-                    grid.paintComponent(graphics);
-                }
-
-                if (stackData != null) {
-                    stackData.draw(graphics);
-                }
+                gameState = GameState.GAME;
 
                 break;
 
@@ -237,7 +240,8 @@ class GameSurface extends Environment implements CellDataProviderIntf, StackData
 
 //<editor-fold defaultstate="collapsed" desc="StackDataEventListenerIntf">
     @Override
-    public void onEvent(String eventType) {
+    public void onEvent(String eventType
+    ) {
 //        System.out.println("Event = " + eventType);
 
         if (eventType.equals(StackDataEventListenerIntf.EVENT_GAME_OVER)) {
