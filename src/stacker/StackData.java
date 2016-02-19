@@ -93,9 +93,7 @@ public final class StackData {
 //        //remaining number of blocks is the new value of numberToAdd
     }
 
-    public void startGame() {
-        
-        
+    public void resetGame() {
 
         for (int row = 0; row < getGameGrid().length; row++) {
             for (int column = 0; column < getGameGrid()[row].length; column++) {    //getGameGrid()[row].length
@@ -104,13 +102,10 @@ public final class StackData {
             }
         }
 
-        //add initial blocks
-//        addBlocksToRow(getGameGrid().length -1, 3);
-        addBlocksToRow(14, 3);
+        addBlocksToRow(getGameGrid().length - 1, 3);
 
-        //set current row to the bottom row
-//        this.currentRow = getGameGrid().length-2;
-        this.currentRow = 14;
+        this.currentRow = getGameGrid().length - 1;
+
     }
 
     public void addBlocksToRow(int row, int numberToAdd) {

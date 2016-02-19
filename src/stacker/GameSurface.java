@@ -50,7 +50,7 @@ class GameSurface extends Environment implements CellDataProviderIntf, StackData
         wonScreen = ResourceTools.loadImageFromResource("stacker/won.png");
 
         stackData = new StackData(grid.getRows(), grid.getColumns(), this, this);
-        stackData.startGame();
+        stackData.resetGame();
 
         setUpSound();
 
@@ -193,7 +193,7 @@ class GameSurface extends Environment implements CellDataProviderIntf, StackData
 
             case RESTART:
 
-                stackData.startGame();
+                stackData.resetGame();
 
                 gameState = GameState.GAME;
 
