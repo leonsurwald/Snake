@@ -32,9 +32,9 @@ public final class StackData {
 
     public void stopMovement() {
 
-        if (getCurrentRow() <= 0) {
-            setDirection(Direction.STOP);
-        }
+//        if (getCurrentRow() <= 0) {
+//            setDirection(Direction.STOP);
+//        }
 
         eliminateBlocks();
 
@@ -45,6 +45,7 @@ public final class StackData {
                 stackDataEvent.onEvent(StackDataEventListenerIntf.EVENT_GAME_OVER);
             }
         } else if (getCurrentRow() > 0) {
+
             setCurrentRow(getCurrentRow() - 1);
 
             int blocksToAdd = 3;
@@ -61,8 +62,7 @@ public final class StackData {
                 blocksToAdd = Math.min(countBlocks(currentRow + 1), blocksToAdd);
             }
 
-            //if blocksToAdd = 0, then end the game
-            if (blocksToAdd <= 0 ) {
+            if (blocksToAdd == 0) {
                 stackDataEvent.onEvent(StackDataEventListenerIntf.EVENT_GAME_OVER);
             } else {
                 addBlocksToRow(getCurrentRow(), blocksToAdd);
